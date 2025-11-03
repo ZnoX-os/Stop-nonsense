@@ -64,9 +64,15 @@
 }
 
 /* Set the root background to header green so the phone status bar adopts it during initial paint/overscroll */
-html { background-color: #003c27; }
+/* Also ensures no white areas above header or below footer */
+html { 
+  background-color: #003c27; 
+  min-height: 100%;
+}
 body {
   font-family: 'Open Sans', sans-serif;
+  background-color: #003c27;
+  min-height: 100vh;
 }
 
 /* ========================================= */
