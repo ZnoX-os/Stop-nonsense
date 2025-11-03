@@ -65,7 +65,15 @@
 body {
   font-family: 'Open Sans', sans-serif;
 }
-
+@media (max-width: 768px) {
+  html {
+    background: linear-gradient(135deg, #002e20 0%, #003c27 55%, #004b32 100%);
+  }
+  body {
+    background: transparent;
+    min-height: 100vh;
+  }
+}
 /* ========================================= */
 /*  NEW HEADER & HERO REDESIGN (2025-09-28) */
 /* ========================================= */
