@@ -57,22 +57,13 @@
   box-sizing: border-box;
 }
 :root {
-:root {
   --main-color: #003c27;
   --hover-color: limegreen;
   --text-color: white;
 }
 
-/* Set the root background to header green so the phone status bar adopts it during initial paint/overscroll */
-/* Also ensures no white areas above header or below footer */
-html { 
-  background-color: #003c27; 
-  min-height: 100%;
-}
 body {
   font-family: 'Open Sans', sans-serif;
-  background-color: #003c27;
-  min-height: 100vh;
 }
 
 /* ========================================= */
@@ -91,9 +82,6 @@ body {
   right: 0;
   z-index: 1000;
   font-family: 'Roboto', sans-serif;
-  /* Fill the iOS safe area so the status bar shows our header green */
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
 }
 
 .site-header.scrolled {background: linear-gradient(90deg, rgba(0,50,35,0.95) 0%, rgba(0,70,45,0.9) 70%);} 
@@ -1796,38 +1784,4 @@ footer {
     font-size: 1em;
     line-height: 1.5;
   }
-}
-
-/* ---------------------------------------------------------- */
-/* Mobile polish for About section (clean, readable on phones) */
-/* ---------------------------------------------------------- */
-@media (max-width: 520px){
-  /* Hide floating background and side hex stacks on very small screens */
-  #about .hex-pattern-bg { display: none !important; }
-  #about .about-hex-container.left,
-  #about .about-hex-container.right { display: none !important; }
-
-  /* Make the content card full-width and comfortable to read */
-  #about .about-section { grid-template-columns: 1fr; padding: 1rem; gap: 1rem; }
-  #about .about-content {
-    width: 100%;
-    max-width: 680px;
-    margin: 0 auto 1.25rem auto;
-    padding: 1rem 1rem 1.15rem;
-    border-radius: 18px;
-    background: #ffffffcc; /* slightly translucent white */
-    -webkit-backdrop-filter: blur(8px) saturate(120%);
-    backdrop-filter: blur(8px) saturate(120%);
-    box-shadow: 0 12px 28px -12px rgba(0,0,0,0.18);
-    text-align: left; /* more natural reading on phones */
-  }
-  #about .about-content h2 { font-size: 1.35rem; margin-bottom: .65rem; }
-  #about .about-kicker { font-size: .6rem; margin-bottom: .5rem; }
-  #about .about-content p { font-size: .95rem; line-height: 1.6; margin-bottom: .9rem; }
-  #about .divider-line { max-width: 100%; margin: .9rem 0; }
-
-  /* Chips tidy-up */
-  #about .area-chips { justify-content: flex-start; gap: .5rem; }
-  #about .area-chip { padding: .45rem .7rem; font-size: .88rem; }
-  #about .area-chip .name { font-size: .92em; }
 }
