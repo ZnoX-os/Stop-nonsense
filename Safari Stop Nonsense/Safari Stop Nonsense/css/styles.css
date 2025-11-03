@@ -57,11 +57,14 @@
   box-sizing: border-box;
 }
 :root {
+:root {
   --main-color: #003c27;
   --hover-color: limegreen;
   --text-color: white;
 }
 
+/* Set the root background to header green so the phone status bar adopts it during initial paint/overscroll */
+html { background-color: #003c27; }
 body {
   font-family: 'Open Sans', sans-serif;
 }
@@ -82,6 +85,9 @@ body {
   right: 0;
   z-index: 1000;
   font-family: 'Roboto', sans-serif;
+  /* Fill the iOS safe area so the status bar shows our header green */
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
 }
 
 .site-header.scrolled {background: linear-gradient(90deg, rgba(0,50,35,0.95) 0%, rgba(0,70,45,0.9) 70%);} 
@@ -1780,7 +1786,7 @@ footer {
     margin-bottom: 15px;
   }
 
-   .about-content p {
+  .about-content p {
     font-size: 1em;
     line-height: 1.5;
   }
@@ -1819,4 +1825,3 @@ footer {
   #about .area-chip { padding: .45rem .7rem; font-size: .88rem; }
   #about .area-chip .name { font-size: .92em; }
 }
-
