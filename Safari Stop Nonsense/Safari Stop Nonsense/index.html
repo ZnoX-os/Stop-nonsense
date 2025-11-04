@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <!-- Ensure the page fills the notch/safe-area -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <title>Safari Stop Nonsense</title>
  <link rel="stylesheet" href="css/styles.css" />
   <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
@@ -19,12 +20,11 @@
   <meta name="twitter:title" content="Safari Stop Nonsense" />
   <meta name="twitter:description" content="Safari Stop Nonsense is a leading supplier of premium precast concrete elements, dedicated to providing innovative solutions for construction projects. Our commitment..." />
   <meta name="twitter:image" content="https://www.safaribeton.co.za/Images/logo.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <!-- PWA/Status bar appearance on iOS + Android -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#003c27">
-</head>
-<body>
+   <!-- Keep this hex in sync with --app-header-color in CSS -->
+   <meta id="theme-color" name="theme-color" content="#02261A">
 </head>
 <body>
   <header class="site-header" role="banner">
