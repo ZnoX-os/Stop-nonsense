@@ -87,6 +87,7 @@ body {
   right: 0;
   z-index: 1000;
   font-family: 'Roboto', sans-serif;
+  padding-top: env(safe-area-inset-top, 0);
 }
 
 .site-header.scrolled {background: linear-gradient(90deg, rgba(0,50,35,0.95) 0%, rgba(0,70,45,0.9) 70%);} 
