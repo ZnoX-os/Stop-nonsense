@@ -60,12 +60,18 @@
   --main-color: #003c27;
   --hover-color: limegreen;
   --text-color: white;
+  /* App header/brand color used for status bar and safe-area painting.
+     If you sample a different green, update this single variable. */
+  --app-header-color: #02261A;
 }
 
 html, body {
   height: 100%;
   overflow-x: hidden;
 }
+/* Paint notch/overscroll areas; remove white gaps on iOS/Android */
+html { background-color: var(--app-header-color, #02261A); height: -webkit-fill-available; }
+body { background: transparent; min-height: 100vh; min-height: 100dvh; min-height: -webkit-fill-available; overscroll-behavior-y: none; overscroll-behavior-x: none; }
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -76,10 +82,10 @@ body {
 /* ========================================= */
 
 .site-header {
-  --header-bg: rgba(0, 60, 39, 0.9);
+  --header-bg:  #02261A;
   -webkit-backdrop-filter: saturate(140%) blur(6px);
   backdrop-filter: saturate(140%) blur(6px);
-  background: linear-gradient(90deg, rgba(0,60,39,0.92) 0%, rgba(0,80,50,0.85) 60%, rgba(0,110,70,0.78) 100%);
+  background:  #02261A;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   position: fixed;
   top: 0;
@@ -90,7 +96,7 @@ body {
   padding-top: env(safe-area-inset-top, 0);
 }
 
-.site-header.scrolled {background: linear-gradient(90deg, rgba(0,50,35,0.95) 0%, rgba(0,70,45,0.9) 70%);} 
+.site-header.scrolled {background:  #02261A;} 
 .header-inner {display:flex;align-items:center;justify-content:space-between;padding:0 2rem;min-height:72px;gap:2rem;}
 .brand-block { display: flex; align-items: center; }
 .logo-link { display: flex; align-items: center; gap: .85rem; text-decoration: none; }
@@ -1159,7 +1165,7 @@ transform: translateY(-100%);
 #shop {
   padding: 50px 20px;
   text-align: center;
-  background: rgb(223 223 222 / 31%);
+  background: #f5f5f5;
 }
 #shop h2 {
   font-size: 1.5em;
