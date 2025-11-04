@@ -62,8 +62,24 @@
   --text-color: white;
 }
 
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#home, #shop, #services, #about, #projects, #contact {
+  flex-shrink: 0;
+}
+
+.site-footer {
+  margin-top: auto;
 }
 
 /* ========================================= */
