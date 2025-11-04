@@ -70,7 +70,15 @@ html, body {
 body {
   font-family: 'Open Sans', sans-serif;
 }
-
+@media (max-width: 768px) {
+  html {
+    background-color: #003c27;
+  }
+  body {
+    background: transparent;
+    min-height: 100vh;
+  }
+}
 /* ========================================= */
 /*  NEW HEADER & HERO REDESIGN (2025-09-28) */
 /* ========================================= */
