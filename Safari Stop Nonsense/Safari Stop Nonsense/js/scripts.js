@@ -125,10 +125,11 @@
           .then((response) => {
             console.log("SUCCESS!", response);
             showPopup("✅ Your message has been sent successfully!", true);
+            contactForm.reset(); // Clear the form after successful submission
           })
           .catch((error) => {
             console.error("FAILED...", error);
-            showPopup("❌ Oops! Something went wrong.", false);
+            showPopup("❌ Oops! Something went wrong. Please try again.", false);
           })
           .finally(() => {
             submitButton.disabled = false;
@@ -363,12 +364,13 @@
   });
 })();
 
-// 8) Change theme-color on scroll
-window.addEventListener("scroll", function () {
-  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-  if (window.scrollY > 0) {
-    themeColorMeta.setAttribute("content", "rgba(0, 0, 0, 0.5)");
-  } else {
-    themeColorMeta.setAttribute("content", "#003c27");
-  }
-});
+// 8) Keep theme-color consistent with header brand color
+// Some browsers (notably iOS Safari) ignore/clip transparency here,
+// which can produce white bars. Always use the solid brand color.
+(function(){
+  const metas = document.querySelectorAll('meta[name="theme-color"]');
+  const brand = getComputedStyle(document.documentElement)
+    .getPropertyValue('--app-header-color')
+    .trim() || '#003c27';
+  metas.forEach(m => m.setAttribute('content', brand));
+})();
