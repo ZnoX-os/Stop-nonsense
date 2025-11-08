@@ -374,3 +374,174 @@
     .trim() || '#003c27';
   metas.forEach(m => m.setAttribute('content', brand));
 })();
+
+// -------------------------------------------
+// 9) Dual-Location Map with Leaflet (No API Key Needed!)
+// -------------------------------------------
+(function() {
+  // Wait for DOM to load
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if Leaflet is loaded
+    if (typeof L === 'undefined') {
+      console.warn('Leaflet not loaded yet, retrying...');
+      setTimeout(arguments.callee, 100);
+      return;
+    }
+
+    const mapElement = document.getElementById('dual-location-map');
+    if (!mapElement) return;
+
+    // Both business locations
+    const locations = [
+      {
+        name: "Safari Stop Nonsense",
+        location: "Tlhabane",
+        address: "3565 Segaole Street, Tlhabane, 0309",
+        coords: [-25.640299, 27.212508],
+        verified: true,
+        phone: "083 583 8388"
+      },
+      {
+        name: "Safari Stop Nonsense",
+        location: "Bapong",
+        address: "Modderspruit, Bapong, 0269",
+        coords: [-25.719264, 27.654526],
+        verified: false,
+        phone: "083 583 8388"
+      }
+    ];
+
+    // Calculate center point
+    const centerLat = (locations[0].coords[0] + locations[1].coords[0]) / 2;
+    const centerLng = (locations[0].coords[1] + locations[1].coords[1]) / 2;
+
+    // Initialize map with custom options
+    const map = L.map('dual-location-map', {
+      zoomControl: true,
+      scrollWheelZoom: true,
+      dragging: true,
+      tap: true,
+      touchZoom: true
+    }).setView([centerLat, centerLng], 10);
+
+    // Add Google-style map tiles (actually using CartoDB Positron for clean look)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20,
+      minZoom: 8
+    }).addTo(map);
+
+    // Custom marker icon with location label
+    const createCustomIcon = (locationName) => {
+      return L.divIcon({
+        className: 'custom-map-marker',
+        html: `
+          <div class="marker-container">
+            <div class="marker-pin">
+              <svg class="pin-icon" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+            </div>
+            <div class="marker-label">${locationName}</div>
+            <div class="marker-shadow"></div>
+          </div>
+        `,
+        iconSize: [80, 60],
+        iconAnchor: [40, 50],
+        popupAnchor: [0, -50]
+      });
+    };
+
+    // Add markers for each location
+    locations.forEach((location, index) => {
+      const marker = L.marker(location.coords, { 
+        icon: createCustomIcon(location.location),
+        title: location.name + ' - ' + location.location
+      }).addTo(map);
+
+      // Modern, clean popup content
+      const popupContent = `
+        <div class="custom-popup">
+          <div class="popup-header">
+            <div class="popup-title">
+              <svg class="location-icon" width="20" height="20" viewBox="0 0 24 24" fill="#EA4335">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <div>
+                <h3>${location.name}</h3>
+                <span class="popup-location">${location.location}</span>
+              </div>
+            </div>
+            ${location.verified ? '<div class="verified-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Verified</span></div>' : ''}
+          </div>
+          
+          <div class="popup-body">
+            <div class="info-section">
+              <div class="info-label">Address</div>
+              <div class="info-value">${location.address}</div>
+            </div>
+            
+            <div class="info-section">
+              <div class="info-label">Phone</div>
+              <div class="info-value">
+                <a href="tel:${location.phone.replace(/\s/g, '')}" class="phone-link">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                  ${location.phone}
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="popup-footer">
+            <a href="https://www.google.com/maps/dir//${location.coords[0]},${location.coords[1]}" 
+               target="_blank" 
+               rel="noopener"
+               class="directions-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.71 11.29l-9-9c-.39-.39-1.02-.39-1.41 0l-9 9c-.39.39-.39 1.02 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9c.39-.38.39-1.01 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/>
+              </svg>
+              Get Directions
+            </a>
+          </div>
+        </div>
+      `;
+
+      // Bind popup with custom options
+      marker.bindPopup(popupContent, {
+        maxWidth: 300,
+        minWidth: 250,
+        className: 'custom-leaflet-popup',
+        closeButton: true,
+        autoClose: false,
+        closeOnClick: false
+      });
+
+      // Don't auto-open popups on mobile to avoid clutter
+      const isMobile = window.innerWidth <= 768;
+      if (!isMobile && index === 0) {
+        setTimeout(() => marker.openPopup(), 500);
+      }
+    });
+
+    // Fit map to show all markers with padding
+    const bounds = L.latLngBounds(locations.map(loc => loc.coords));
+    const isMobile = window.innerWidth <= 768;
+    map.fitBounds(bounds, { 
+      padding: isMobile ? [30, 30] : [80, 80],
+      maxZoom: 12
+    });
+
+    // Add zoom control to bottom right for better mobile UX
+    map.zoomControl.setPosition('bottomright');
+
+    // Add scale control
+    L.control.scale({
+      position: 'bottomleft',
+      metric: true,
+      imperial: false
+    }).addTo(map);
+  });
+})();
